@@ -3,13 +3,12 @@ info:
   title: ZigPRO
   version: 1.0.0
   description: |
-
     # Introduction
 
     ## About ZigPRO
-  
+
     ZigPRO is a service that integrate and handle different type of transaction, payment channels, payment service providers, acquirers, payment gateways and banks on a single, unified service.
-  
+
     ZigPRO's Orchestration service exposes unified API for various payment methods and brings together merchant and user accounts, acquirers, payment providers, fraud detection services, etc. to initiate, validate, route and process transactions involving those parties.
 
     ## Authentication
@@ -19,45 +18,44 @@ info:
     API request to ZigPRO API is required to include bellow fields in the header:
     - **x-merchant-id: {merchant identifier}**
     - **x-api-key: {merchant API key}**
-  
+
     Merchant should be able to obtain above credential information in ZigPro Portal.
-  
+
     Merchant API key management:
     - Merchant generates API Key through ZigPro Portal.
     - ZigPro only stores hash value of API key in the database.
     - API key value is displayed in the Portal UI only once after generation. Merchant to copy and store the key safely.
     - Only one active API key is allowed at once. Whenever the merchant generate new API key, the existing key will be deactivate in 24 hours.
-  
+
     ### Signature verification
-  
+
     Merchant is also required to generate signature by merchant private key and include bellow fields in the header:
     - **x-signature: {signature}**
-  
+
     ### Signature generation steps
-  
+
     #### Build the signature payload:
-    
+
     > POST method:
     > payload=(JSON string (request body)) + headers[merchant_id] + headers[request_id] + headers[request_date_time]
-  
+
     > GET method:
     > payload=headers[merchant_id] + headers[request_id] + headers[request_date_time]
-  
+
     #### Encode the payload with UTF-8
-    
+
     #### Sign the encoded payload by merchant private key
-    
+
     > Algorithm: SHA256withRSA
-    
+
     #### Base64 encode the signed value
-    
+
     > signature=Base64Encode(signed_value)
-    
+
     Merchant key management:
     - Merchant upload and manage their public key through ZigPro Portal
     - Only one active public key at a time
     - When merchant replace the current public key with their new ones, the old key is still active for 24 hours before becoming permanent invalid.
-  
   contact:
     name: Herman Santoso
     url: www.zig.live
@@ -88,81 +86,43 @@ paths:
                 properties:
                   payment_ref:
                     type: string
-                    x-stoplight:
-                      id: 3376jb46pircc
                   merchant_txn_id:
                     type: string
-                    x-stoplight:
-                      id: 6a15s3aqr5lrg
                   response_code:
                     type: string
-                    x-stoplight:
-                      id: h8lrt6jiylquf
                   message:
                     type: string
-                    x-stoplight:
-                      id: lx25d9j6q3ckx
                   action:
                     type: object
-                    x-stoplight:
-                      id: k21gc5r06jsr7
                     properties:
                       method:
                         type: string
-                        x-stoplight:
-                          id: j38s9pd274jux
                       payment_data:
                         type: string
-                        x-stoplight:
-                          id: 2boxrvn4mmfbo
                       type:
                         type: string
-                        x-stoplight:
-                          id: xxcjw1twzpgka
                       payment_method_type:
                         type: string
-                        x-stoplight:
-                          id: ym9nhhcr1j0xt
                       url:
                         type: string
-                        x-stoplight:
-                          id: tu4j5vh0twjh6
                   payment_token:
                     type: string
-                    x-stoplight:
-                      id: q7knwueav31tq
                   token_provider:
                     type: string
-                    x-stoplight:
-                      id: cqh0tnocndy7d
                   payment_detail:
                     type: object
-                    x-stoplight:
-                      id: mpjj1bqg4zhh1
                     properties:
                       bin_no:
                         type: string
-                        x-stoplight:
-                          id: u84gwe5ml045e
                       trailing_no:
                         type: string
-                        x-stoplight:
-                          id: ymzquq30zpynd
                       exp_month:
                         type: string
-                        x-stoplight:
-                          id: rbplw0fnxwxhl
                       exp_year:
                         type: string
-                        x-stoplight:
-                          id: 7oudzrqv71ley
                       card_type:
                         type: string
-                        x-stoplight:
-                          id: siqt84xxnqbk3
       operationId: post-v1-register
-      x-stoplight:
-        id: nbw4gguhndfgz
       parameters:
         - schema:
             type: string
@@ -203,16 +163,10 @@ paths:
               properties:
                 merchant_txn_id:
                   type: string
-                  x-stoplight:
-                    id: 5k7tc7sm3utxo
                 routing_code:
                   type: string
-                  x-stoplight:
-                    id: xnlgvlhyqo2kx
                 payer:
                   type: object
-                  x-stoplight:
-                    id: umjxmgju063m0
                   required:
                     - id
                     - name
@@ -221,109 +175,110 @@ paths:
                   properties:
                     id:
                       type: string
-                      x-stoplight:
-                        id: c5w1kopwu4kh4
                     name:
                       type: string
-                      x-stoplight:
-                        id: wns4cif0jk9oj
                     mobile_no:
                       type: string
-                      x-stoplight:
-                        id: ieb2vwzdk0t5e
                     email:
                       type: string
-                      x-stoplight:
-                        id: hrjphbqbnpxyu
                     address_1:
                       type: string
-                      x-stoplight:
-                        id: 803h1dv3vmr0j
                     address_2:
                       type: string
-                      x-stoplight:
-                        id: f6oz63a3941zq
                     state:
                       type: string
-                      x-stoplight:
-                        id: upg3qpsdyd62n
                     city:
                       type: string
-                      x-stoplight:
-                        id: 0bbgklmysfkog
                     country:
                       type: string
-                      x-stoplight:
-                        id: ind6rmjddq0sc
                     postal_code:
                       type: string
-                      x-stoplight:
-                        id: c6z8sb0htwwzk
                 device_info:
                   type: object
-                  x-stoplight:
-                    id: 9s1chv2uwdhk7
                   properties:
                     type:
                       type: string
-                      x-stoplight:
-                        id: pcvqhigyj84p0
                     udid:
                       type: string
-                      x-stoplight:
-                        id: w4ni550sdct0q
                     ip:
                       type: string
-                      x-stoplight:
-                        id: jm7tgvds7fvd8
                 payment_method:
                   type: string
-                  x-stoplight:
-                    id: bu6u98aerroz0
                 payment_info:
                   type: object
-                  x-stoplight:
-                    id: 3iueeg0dnaj5o
                   properties:
                     card_number:
                       type: string
-                      x-stoplight:
-                        id: jvhz4p5q2vrkg
                     holder_name:
                       type: string
-                      x-stoplight:
-                        id: vu9j4u4exadsk
                     exp_month:
                       type: string
-                      x-stoplight:
-                        id: hx2rifn3r8f68
                     exp_year:
                       type: string
-                      x-stoplight:
-                        id: hftfn0dupfd1k
                     cvv:
                       type: string
-                      x-stoplight:
-                        id: 33j53r6lynmjb
                     card_type:
                       type: string
-                      x-stoplight:
-                        id: 7fgadmry14fdw
                     complete_3ds_mode:
                       type: string
-                      x-stoplight:
-                        id: hvj7qz6baxhnx
                 return_url:
                   type: string
-                  x-stoplight:
-                    id: 198kcl4nqrjfa
                 metadata:
                   type: object
-                  x-stoplight:
-                    id: sh94tj8twwtu1
       description: Register Payment Method API is used to obtain token from PSP for subsequent payment operations
       tags:
         - API
+  '/v1/register/{payment_ref}/complete':
+    parameters:
+      - schema:
+          type: string
+        name: payment_ref
+        in: path
+        required: true
+        description: The value of payment_ref from Register Payment Method response
+    post:
+      summary: Complete Register Payment Method
+      tags:
+        - API
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_ref:
+                    type: string
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+                  payment_token:
+                    type: string
+                  token_provider:
+                    type: string
+                  payment_detail:
+                    type: object
+                    properties:
+                      bin_no:
+                        type: string
+                      trailing_no:
+                        type: string
+                      exp_month:
+                        type: string
+                      exp_year:
+                        type: string
+                      card_type:
+                        type: string
+      operationId: post-v1-register-payment_ref-complete
+      description: Complete Register Payment Method is used to complete the 3DS transaction when complete_3ds_mode is TRUE after user authenticates themselves successfully.
 x-internal: false
 components:
   securitySchemes:
@@ -333,4 +288,4 @@ components:
       in: header
 tags:
   - name: API
-    description: Collection of API that can be consumed by merchant to perform payment, adjustment, capture, reversal, refund.
+    description: 'Collection of API that can be consumed by merchant to perform payment, adjustment, capture, reversal, refund.'
