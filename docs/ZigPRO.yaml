@@ -182,9 +182,7 @@ paths:
           description: Production Environment
 tags:
   - name: Authentication
-    description: Authentication requirement to consume ZogPRO API
   - name: Register Payment Method
-    description: Register Payment Method
 components:
   securitySchemes:
     x-api-key:
