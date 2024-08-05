@@ -277,4 +277,7 @@ components:
       type: apiKey
       in: header
 tags:
-  - name: Introduction
+  - name: Authentication
+    description: Authentication
+  - name: Register Payment Method
+    description: Register Payment Method
