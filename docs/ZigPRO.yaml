@@ -333,3 +333,4 @@ components:
       in: header
 tags:
   - name: API
+    description: Collection of API that can be consumed by merchant to perform payment, adjustment, capture, reversal, refund.
