@@ -2,7 +2,62 @@ openapi: 3.0.0
 info:
   title: ZigPRO
   version: 1.0.0
-  description: "ZigPRO is a service that integrate and handle different type of transaction, payment channels, payment service providers, acquirers, payment gateways and banks on a single, unified service.\r\n\r\nZigPRO's Orchestration service exposes unified API for various payment methods and brings together merchant and user accounts, acquirers, payment providers, fraud detection services, etc. to initiate, validate, route and process transactions involving those parties.\r\n\r\nAPI request to ZigPRO API is required to include bellow fields in the header:\r\n- **x-merchant-id: {merchant identifier}**\r\n- **x-api-key: {merchant API key}**\r\n\r\nMerchant should be able to obtain above credential information in ZigPro Portal.\r\n\r\nMerchant API key management:\r\n- Merchant generates API Key through ZigPro Portal.\r\n- ZigPro only stores hash value of API key in the database.\r\n- API key value is displayed in the Portal UI only once after generation. Merchant to copy and store the key safely.\r\n- Only one active API key is allowed at once. Whenever the merchant generate new API key, the existing key will be deactivate in 24 hours.\r\n\r\n**Signature verification**\r\n\r\nMerchant is also required to generate signature by merchant private key and include bellow fields in the header:\r\n- **x-signature: {signature}**\r\n\r\n**Signature generation steps**\r\n\r\n1. Build the signature payload:\r\n\r\n> POST method:\r\n> payload=(JSON string (request body)) + headers[merchant_id] + headers[request_id] + headers[request_date_time]\r\n\r\n> GET method:\r\n> payload=headers[merchant_id] + headers[request_id] + headers[request_date_time]\r\n\r\n2. Encode the payload with UTF-8\r\n\r\n3. Sign the encoded payload by merchant private key\r\n\r\n> Algorithm: SHA256withRSA\r\n\r\n4. Base64 encode the signed value\r\n\r\n> signature=Base64Encode(signed_value)\r\n\r\nMerchant key management:\r\n- Merchant upload and manage their public key through ZigPro Portal\r\n- Only one active public key at a time\r\n- When merchant replace the current public key with their new ones, the old key is still active for 24 hours before becoming permanent invalid."
+  description: |
+
+    # Introduction
+
+    ## About ZigPRO
+  
+    ZigPRO is a service that integrate and handle different type of transaction, payment channels, payment service providers, acquirers, payment gateways and banks on a single, unified service.
+  
+    ZigPRO's Orchestration service exposes unified API for various payment methods and brings together merchant and user accounts, acquirers, payment providers, fraud detection services, etc. to initiate, validate, route and process transactions involving those parties.
+
+    ## Authentication
+
+    ### Merchant ID and API Key
+
+    API request to ZigPRO API is required to include bellow fields in the header:
+    - **x-merchant-id: {merchant identifier}**
+    - **x-api-key: {merchant API key}**
+  
+    Merchant should be able to obtain above credential information in ZigPro Portal.
+  
+    Merchant API key management:
+    - Merchant generates API Key through ZigPro Portal.
+    - ZigPro only stores hash value of API key in the database.
+    - API key value is displayed in the Portal UI only once after generation. Merchant to copy and store the key safely.
+    - Only one active API key is allowed at once. Whenever the merchant generate new API key, the existing key will be deactivate in 24 hours.
+  
+    ### Signature verification
+  
+    Merchant is also required to generate signature by merchant private key and include bellow fields in the header:
+    - **x-signature: {signature}**
+  
+    ### Signature generation steps
+  
+    #### Build the signature payload:
+    
+    > POST method:
+    > payload=(JSON string (request body)) + headers[merchant_id] + headers[request_id] + headers[request_date_time]
+  
+    > GET method:
+    > payload=headers[merchant_id] + headers[request_id] + headers[request_date_time]
+  
+    #### Encode the payload with UTF-8
+    
+    #### Sign the encoded payload by merchant private key
+    
+    > Algorithm: SHA256withRSA
+    
+    #### Base64 encode the signed value
+    
+    > signature=Base64Encode(signed_value)
+    
+    Merchant key management:
+    - Merchant upload and manage their public key through ZigPro Portal
+    - Only one active public key at a time
+    - When merchant replace the current public key with their new ones, the old key is still active for 24 hours before becoming permanent invalid.
+  
   contact:
     name: Herman Santoso
     url: www.zig.live
@@ -267,6 +322,8 @@ paths:
                   x-stoplight:
                     id: sh94tj8twwtu1
       description: Register Payment Method API is used to obtain token from PSP for subsequent payment operations
+      tags:
+        - API
 x-internal: false
 components:
   securitySchemes:
@@ -275,4 +332,4 @@ components:
       type: apiKey
       in: header
 tags:
-  - name: Introduction
+  - name: API
