@@ -268,7 +268,6 @@ paths:
                   type: object
                   x-stoplight:
                     id: sh94tj8twwtu1
-      description: Register Payment Method API is used to obtain token from PSP for subsequent payment operations
 x-internal: false
 components:
   securitySchemes:
@@ -280,4 +279,4 @@ tags:
   - name: Authentication
     description: Authentication
   - name: Register Payment Method
-    description: Register Payment Method
+    description: Register Payment Method API is used to obtain token from PSP for subsequent payment operations
