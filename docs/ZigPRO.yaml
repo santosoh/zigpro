@@ -488,6 +488,86 @@ paths:
       description: Complete Pre-Authorization is used to complete the 3DS transaction when complete_3ds_mode is TRUE after user authenticates themselves successfully.
       tags:
         - API
+  '/v1/adjust/{payment_ref}':
+    parameters:
+      - schema:
+          type: string
+        name: payment_ref
+        in: path
+        required: true
+        description: The value of payment_ref from Pre-Authorization response
+    post:
+      summary: Adjust Pre-Authorization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+      operationId: post-v1-adjust-payment_ref
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-merchant-id
+          required: true
+          description: Merchant Identifier
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: Merchant API Key
+        - schema:
+            type: string
+          in: header
+          name: x-signature
+          required: true
+          description: Signature
+        - schema:
+            type: string
+          in: header
+          name: x-idempotency-key
+          description: Idempotency Key
+        - schema:
+            type: string
+          in: header
+          name: x-request-timestamp
+          description: Request Timestamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - merchant_txn_id
+              properties:
+                merchant_txn_id:
+                  type: string
+                merchant_ref:
+                  type: string
+                txn_amount:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    currency:
+                      type: string
+                statement_descriptor:
+                  type: string
+                metadata:
+                  type: object
+      description: Adjust a Pre-Authorization to a new amount. The new amount must be more than the original Pre-Authorization amount.
+      tags:
+        - API
 x-internal: false
 components:
   securitySchemes:
