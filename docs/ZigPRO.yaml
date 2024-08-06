@@ -238,8 +238,6 @@ paths:
         description: The value of payment_ref from Register Payment Method response
     post:
       summary: Complete Register Payment Method
-      tags:
-        - API
       responses:
         '200':
           description: OK
@@ -279,6 +277,230 @@ paths:
                         type: string
       operationId: post-v1-register-payment_ref-complete
       description: Complete Register Payment Method is used to complete the 3DS transaction when complete_3ds_mode is TRUE after user authenticates themselves successfully.
+      tags:
+        - API
+  /v1/preauthorize:
+    post:
+      summary: Pre-Authorization
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_ref:
+                    type: string
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+                  action:
+                    type: object
+                    properties:
+                      method:
+                        type: string
+                      payment_data:
+                        type: string
+                      type:
+                        type: string
+                      payment_method_type:
+                        type: string
+                      url:
+                        type: string
+                  payment_detail:
+                    type: object
+                    properties:
+                      bin_no:
+                        type: string
+                      trailing_no:
+                        type: string
+                      exp_month:
+                        type: string
+                      exp_year:
+                        type: string
+                      card_type:
+                        type: string
+      operationId: post-v1-preauthorize
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-merchant-id
+          required: true
+          description: Merchant Identifier
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: Merchant API Key
+        - schema:
+            type: string
+          in: header
+          name: x-signature
+          required: true
+          description: Signature
+        - schema:
+            type: string
+          in: header
+          name: x-idempotency-key
+          description: Idempotency Key
+        - schema:
+            type: string
+          in: header
+          name: x-request-timestamp
+          description: Request Timestamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - merchant_txn_id
+                - payer
+              properties:
+                merchant_txn_id:
+                  type: string
+                merchant_ref:
+                  type: string
+                routing_code:
+                  type: string
+                payer:
+                  type: object
+                  required:
+                    - id
+                    - name
+                    - mobile_no
+                    - email
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    mobile_no:
+                      type: string
+                    email:
+                      type: string
+                    address_1:
+                      type: string
+                    address_2:
+                      type: string
+                    state:
+                      type: string
+                    city:
+                      type: string
+                    country:
+                      type: string
+                    postal_code:
+                      type: string
+                txn_amount:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    currency:
+                      type: string
+                device_info:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    udid:
+                      type: string
+                    ip:
+                      type: string
+                payment_method:
+                  type: string
+                payment_info:
+                  type: object
+                  properties:
+                    token_provider:
+                      type: string
+                    payment_token:
+                      type: string
+                    enable_3ds:
+                      type: boolean
+                    complete_3ds_mode:
+                      type: string
+                capture_mode:
+                  type: string
+                statement_descriptor:
+                  type: string
+                return_url:
+                  type: string
+                metadata:
+                  type: object
+      description: Pre-Authorization API is used to authorized the transaction to the issuer. Both manual and auto capture is supported by this API.
+      tags:
+        - API
+  '/v1/preauthorize/{payment_ref}/complete':
+    parameters:
+      - schema:
+          type: string
+        name: payment_ref
+        in: path
+        required: true
+        description: The value of payment_ref from Pre-Authorization response
+    post:
+      summary: Complete Pre-Authorization in 3DS Flow
+      responses:
+        '200':
+          description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_ref:
+                    type: string
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+                  action:
+                    type: object
+                    properties:
+                      method:
+                        type: string
+                      payment_data:
+                        type: string
+                      type:
+                        type: string
+                      payment_method_type:
+                        type: string
+                      url:
+                        type: string
+                  payment_detail:
+                    type: object
+                    properties:
+                      bin_no:
+                        type: string
+                      trailing_no:
+                        type: string
+                      exp_month:
+                        type: string
+                      exp_year:
+                        type: string
+                      card_type:
+                        type: string
+      operationId: post-v1-preauthorize-payment_ref-complete
+      description: Complete Pre-Authorization is used to complete the 3DS transaction when complete_3ds_mode is TRUE after user authenticates themselves successfully.
+      tags:
+        - API
 x-internal: false
 components:
   securitySchemes:
@@ -288,4 +510,4 @@ components:
       in: header
 tags:
   - name: API
-    description: Collection of API that can be consumed by merchant to perform payment, adjustment, capture, reversal, refund.
+    description: 'Collection of API that can be consumed by merchant to perform payment, adjustment, capture, reversal, refund.'
