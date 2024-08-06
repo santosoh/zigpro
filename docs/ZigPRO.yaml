@@ -471,19 +471,6 @@ paths:
                     type: string
                   message:
                     type: string
-                  action:
-                    type: object
-                    properties:
-                      method:
-                        type: string
-                      payment_data:
-                        type: string
-                      type:
-                        type: string
-                      payment_method_type:
-                        type: string
-                      url:
-                        type: string
                   payment_detail:
                     type: object
                     properties:
