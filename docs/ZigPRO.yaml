@@ -568,6 +568,75 @@ paths:
       description: Adjust a Pre-Authorization to a new amount. The new amount must be more than the original Pre-Authorization amount.
       tags:
         - API
+  '/v1/reversal/{payment_ref}':
+    parameters:
+      - schema:
+          type: string
+        name: payment_ref
+        in: path
+        required: true
+        description: The value of payment_ref from Pre-Authorization response
+    post:
+      summary: Reverse Pre-Authorization
+      tags:
+        - API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+      operationId: post-v1-reversal-payment_ref
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-merchant-id
+          required: true
+          description: Merchant Identifier
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: Merchant API Key
+        - schema:
+            type: string
+          in: header
+          name: x-signature
+          required: true
+          description: Signature
+        - schema:
+            type: string
+          in: header
+          name: x-idempotency-key
+          description: Idempotency Key
+        - schema:
+            type: string
+          in: header
+          name: x-request-timestamp
+          description: Request Timestamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - merchant_txn_id
+              properties:
+                merchant_txn_id:
+                  type: string
+                reason:
+                  type: string
+      description: Reverse an uncaptured pre-authorization.
 x-internal: false
 components:
   securitySchemes:
