@@ -501,6 +501,10 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -585,6 +589,10 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -656,6 +664,10 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -736,6 +748,10 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            x-response-timestamp:
+              schema:
+                type: string
           content:
             application/json:
               schema:
