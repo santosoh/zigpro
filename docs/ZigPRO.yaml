@@ -506,6 +506,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  payment_ref:
+                    type: string
                   merchant_txn_id:
                     type: string
                   response_code:
@@ -588,6 +590,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  payment_ref:
+                    type: string
                   merchant_txn_id:
                     type: string
                   response_code:
@@ -636,7 +640,167 @@ paths:
                   type: string
                 reason:
                   type: string
-      description: Reverse an uncaptured pre-authorization.
+      description: Reverse a pre-authorization.
+  '/v1/capture/{payment_ref}':
+    parameters:
+      - schema:
+          type: string
+        name: payment_ref
+        in: path
+        required: true
+        description: The value of payment_ref from Pre-Authorization response
+    post:
+      summary: Capture Pre-Authorization
+      tags:
+        - API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_ref:
+                    type: string
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+      operationId: post-v1-capture-payment_ref
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-merchant-id
+          required: true
+          description: Merchant Identifier
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: Merchant API Key
+        - schema:
+            type: string
+          in: header
+          name: x-signature
+          required: true
+          description: Signature
+        - schema:
+            type: string
+          in: header
+          name: x-idempotency-key
+          description: Idempotency Key
+        - schema:
+            type: string
+          in: header
+          name: x-request-timestamp
+          description: Request Timestamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - merchant_txn_id
+              properties:
+                merchant_txn_id:
+                  type: string
+                merchant_ref:
+                  type: string
+                txn_amount:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    currency:
+                      type: string
+                statement_descriptor:
+                  type: string
+      description: Capture a pre-authorization.
+  '/v1/refund/{payment_ref}':
+    parameters:
+      - schema:
+          type: string
+        name: payment_ref
+        in: path
+        required: true
+        description: The value of payment_ref from Pre-Authorization response
+    post:
+      summary: Refund
+      tags:
+        - API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_ref:
+                    type: string
+                  merchant_txn_id:
+                    type: string
+                  response_code:
+                    type: string
+                  message:
+                    type: string
+      operationId: post-v1-refund-payment_ref
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-merchant-id
+          required: true
+          description: Merchant Identifier
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: Merchant API Key
+        - schema:
+            type: string
+          in: header
+          name: x-signature
+          required: true
+          description: Signature
+        - schema:
+            type: string
+          in: header
+          name: x-idempotency-key
+          description: Idempotency Key
+        - schema:
+            type: string
+          in: header
+          name: x-request-timestamp
+          description: Request Timestamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - merchant_txn_id
+              properties:
+                merchant_txn_id:
+                  type: string
+                merchant_ref:
+                  type: string
+                txn_amount:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    currency:
+                      type: string
+                reason:
+                  type: string
+      description: Refund a captured transaction
 x-internal: false
 components:
   securitySchemes:
