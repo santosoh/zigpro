@@ -824,6 +824,7 @@ paths:
         name: payment_ref
         in: path
         required: true
+        description: The value of payment_ref from Pre-Authorization response
     get:
       summary: Get Transaction Details
       tags:
@@ -914,22 +915,24 @@ paths:
                   metadata:
                     type: object
                   payment_history:
-                    type: object
-                    properties:
-                      transaction_type:
-                        type: string
-                      txn_amount:
-                        type: string
-                      status:
-                        type: string
-                      merchant_txn_id:
-                        type: string
-                      merchant_ref:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        transaction_type:
+                          type: string
+                        txn_amount:
+                          type: string
+                        status:
+                          type: string
+                        merchant_txn_id:
+                          type: string
+                        merchant_ref:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
                   txn_status:
                     type: string
       operationId: get-v1-transaction-payment_ref
